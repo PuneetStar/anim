@@ -25,9 +25,6 @@ from ..http_client import client
 def animdl_grab(query, index, **kwargs):
 
     console = helpers.stream_handlers.get_console()
-    console.print(
-        "The content is outputted to [green]stdout[/] while these messages are outputted to [red]stderr[/]."
-    )
 
     anime, provider = helpers.process_query(
         client, query, console, auto_index=index, provider=DEFAULT_PROVIDER
