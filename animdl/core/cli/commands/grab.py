@@ -37,6 +37,7 @@ def animdl_grab(query, index, **kwargs):
         client, anime.get("anime_url"), check=kwargs.get("range")
     ):
         stream_url = list(helpers.ensure_extraction(client, stream_url_caller))
+        click.echo(json.dumps(anime))
         result = {
             "anime": anime.get("name"),
             "episode": episode,
