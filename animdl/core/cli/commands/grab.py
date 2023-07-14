@@ -35,7 +35,6 @@ def animdl_grab(query, index, **kwargs):
 
     if not anime:
         return
-    click.echo(json.dumps(anime))
     for stream_url_caller, episode in providers.get_appropriate(
         client, anime.get("anime_url"), check=kwargs.get("range")
     ):
