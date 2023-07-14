@@ -27,7 +27,7 @@ def animdl_grab(query, index, **kwargs):
     console = helpers.stream_handlers.get_console()
 
     anime, provider = helpers.process_query(
-        client, query, console, auto_index=index, provider=DEFAULT_PROVIDER
+        client, query, console, auto_index=1, provider=DEFAULT_PROVIDER
     )
 
     if not anime:
