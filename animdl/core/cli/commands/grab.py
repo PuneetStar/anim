@@ -1,45 +1,40 @@
 import json
-
-import click
-
 from ...__version__ import __core__
 from ...codebase import providers
 from ...config import CHECK_FOR_UPDATES, DEFAULT_PROVIDER
 from .. import helpers
 from ..http_client import client
 
+def animdl_grab(query, index, range_value=None):
+    """
+    Stream the stream links to the stdout stream for external usage.
 
-@click.command(
-    name="grab", help="Stream the stream links to the stdout stream for external usage."
-)
-@helpers.decorators.content_fetch_options(
-    include_quality_options=False,
-    include_special_options=False,
-)
-@helpers.decorators.automatic_selection_options()
-@helpers.decorators.logging_options()
-@helpers.decorators.setup_loggers()
-@helpers.decorators.banner_gift_wrapper(
-    client, __core__, check_for_updates=CHECK_FOR_UPDATES
-)
-def animdl_grab(query, index, **kwargs):
+    Parameters:
+        query (str): The search query for the anime.
+        index (bool): Whether to automatically select the first search result or prompt for selection.
+        range_value (Optional[str]): A range of episodes to fetch.
 
-    console = helpers.stream_handlers.get_console()
-
+    Returns:
+        dict: A dictionary containing the anime title, episode number, and stream URLs.
+    """
     anime, provider = helpers.process_query(
-        client, query, console, auto_index=1, provider=DEFAULT_PROVIDER
+        client, query, None, auto_index=index, provider=DEFAULT_PROVIDER
     )
 
     if not anime:
-        return
+        return {}
 
+    episode_streams = []
     for stream_url_caller, episode in providers.get_appropriate(
-        client, anime.get("anime_url"), check=kwargs.get("range")
+        client, anime.get("anime_url"), check=range_value
     ):
         stream_url = list(helpers.ensure_extraction(client, stream_url_caller))
-        result = {
-            "anime": anime.get("name"),
-            "episode": episode,
-            "streams": stream_url
-        }
-        click.echo(json.dumps(result))
+        try:
+            title = anime.get("name")
+        except Exception as e:
+            title = ''
+        episode_data = {"title": title, "episode": episode, "streams": stream_url}
+        episode_streams.append(episode_data)
+
+    return {"anime_data": episode_streams}
+
