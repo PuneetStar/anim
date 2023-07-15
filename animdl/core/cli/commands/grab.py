@@ -18,7 +18,6 @@ def animdl_grab(query, provider, episode_number=None):
     anime, selected_provider = helpers.process_query(
         client, query, None, auto_index=1, provider=provider
     )
-    print(anime)
     if not anime:
         return {}
 
