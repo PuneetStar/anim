@@ -5,19 +5,19 @@ from ...config import CHECK_FOR_UPDATES, DEFAULT_PROVIDER
 from .. import helpers
 from ..http_client import client
 
-def animdl_grab(query, range_value=None):
+def animdl_grab(query, provider):
     """
     Stream the stream links to the stdout stream for external usage.
 
     Parameters:
         query (str): The search query for the anime.
-        range_value (Optional[str]): A range of episodes to fetch.
+        provider (str): The provider to use for fetching the anime.
 
     Returns:
         dict: A dictionary containing the anime title, episode number, and stream URLs.
     """
-    anime, provider = helpers.process_query(
-        client, query, None, auto_index=1, provider=DEFAULT_PROVIDER
+    anime, selected_provider = helpers.process_query(
+        client, query, None, auto_index=1, provider=provider
     )
 
     if not anime:
@@ -25,7 +25,7 @@ def animdl_grab(query, range_value=None):
 
     episode_streams = []
     for stream_url_caller, episode in providers.get_appropriate(
-        client, anime.get("anime_url"), check=lambda ep: ep in range_value.split('-') if range_value else None
+        client, anime.get("anime_url")
     ):
         stream_url = list(helpers.ensure_extraction(client, stream_url_caller))
         try:
