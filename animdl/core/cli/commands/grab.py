@@ -17,7 +17,7 @@ def animdl_grab(query, range_value=None):
         dict: A dictionary containing the anime title, episode number, and stream URLs.
     """
     anime, provider = helpers.process_query(
-        client, query, None, auto_index=True, provider=DEFAULT_PROVIDER
+        client, query, None, auto_index=1, provider=DEFAULT_PROVIDER
     )
 
     if not anime:
