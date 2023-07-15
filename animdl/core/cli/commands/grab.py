@@ -9,33 +9,12 @@ from ..http_client import client
 CACHE_DIR = "anime_data_cache"
 
 def get_cache_filename(query, episode_number=None):
-    """
-    Generate a cache filename for the given query and episode number.
-
-    Parameters:
-        query (str): The search query for the anime (should match the title).
-        episode_number (int): The specific episode number to fetch. (Optional)
-
-    Returns:
-        str: The cache filename.
-    """
     if episode_number is None:
         return f"{CACHE_DIR}/{query}.json"
     else:
         return f"{CACHE_DIR}/{query}_ep{episode_number}.json"
 
 def animdl_grab(query, provider, episode_number=None):
-    """
-    Stream the stream links to the stdout stream for external usage.
-
-    Parameters:
-        query (str): The search query for the anime (should match the title).
-        provider (str): The provider to use for fetching the anime.
-        episode_number (int): The specific episode number to fetch. (Optional)
-
-    Returns:
-        dict: A dictionary containing the anime title, episode number, and stream URLs.
-    """
     anime, selected_provider = helpers.process_query(
         client, query, None, auto_index=1, provider=provider
     )
@@ -77,4 +56,3 @@ def animdl_grab(query, provider, episode_number=None):
         json.dump(data_to_cache, cache_file)
 
     return data_to_cache
-
