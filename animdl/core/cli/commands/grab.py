@@ -20,6 +20,7 @@ def animdl_grab(query, provider, episode_number=None):
     )
 
     if not anime:
+        print("no anime")
         return {}
 
     # Create cache directory if it doesn't exist
