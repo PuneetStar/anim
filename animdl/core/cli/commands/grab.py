@@ -6,7 +6,7 @@ from ...config import CHECK_FOR_UPDATES, DEFAULT_PROVIDER
 from .. import helpers
 from ..http_client import client
 
-CACHE_DIR = "anime_data_cache"
+CACHE_DIR = "/tmp/anime_data_cache"
 
 def get_cache_filename(query, episode_number=None):
     if episode_number is None:
