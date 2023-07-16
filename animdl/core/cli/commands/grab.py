@@ -1,7 +1,6 @@
 import os
 from ...__version__ import __core__
 from ...codebase import providers
-from ...config import DEFAULT_PROVIDER
 from .. import helpers
 from ..http_client import client
 
