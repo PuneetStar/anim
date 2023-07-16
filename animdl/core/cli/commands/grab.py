@@ -17,7 +17,7 @@ def animdl_grab(query, provider, episode_number=None):
     for stream_url_caller, episode in providers.get_appropriate(
         client, anime.get("anime_url")
     ):
-        if episode_number is None or (episode_number is not None and episode == episode_number):
+        if episode_number is None or episode == episode_number:
             stream_url = list(helpers.ensure_extraction(client, stream_url_caller))
             try:
                 title = anime.get("name")
