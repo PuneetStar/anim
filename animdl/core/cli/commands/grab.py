@@ -1,6 +1,8 @@
+import json
 import os
 from ...__version__ import __core__
 from ...codebase import providers
+from ...config import CHECK_FOR_UPDATES, DEFAULT_PROVIDER
 from .. import helpers
 from ..http_client import client
 
@@ -10,7 +12,7 @@ def animdl_grab(query, provider, episode_number=None):
     )
     if not anime:
         return {}
-
+    
     episode_streams = []
     for stream_url_caller, episode in providers.get_appropriate(
         client, anime.get("anime_url")
@@ -24,6 +26,5 @@ def animdl_grab(query, provider, episode_number=None):
             episode_data = {"title": title, "episode": episode, "streams": stream_url}
             episode_streams.append(episode_data)
 
-    data_to_return = {"anime_data": episode_streams}
-
-    return data_to_return
+    data_to_cache = {"anime_data": episode_streams}
+    return data_to_cache
